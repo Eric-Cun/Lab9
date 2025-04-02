@@ -19,8 +19,8 @@ void DFS2(vector<int>* G, bool* seen, vector<int>& scc, int v){
   seen[v] = true;
   scc.push_back(v);
   for(int u : G[v]){
-    if(!seen[v]){
-      DFS2(G, seen, scc, v);
+    if(!seen[u]){
+      DFS2(G, seen, scc, u);
     }
   }
   //
@@ -73,26 +73,29 @@ int main(){
     af[i] = i;
   }
   sort(af.begin(), af.end(), [&f](int i, int j){
-    return f[i] < f[j];
+    return f[i] > f[j];
   });
   //af = argsort(f);
   int* res = new int[V];
 
   for(int i = 0; i < V; i++){
+    res[i] = -1;
+  }
+
+  
+  for(int i = 0; i < V; i++){
     int v = af[i];
-    v = af[i];
     if(!seen[v]){
       vector<int> scc;
-      DFS2(G, seen, scc, v);
-      //sccid = min(scc);
-      int sccid = scc[0];
+      DFS2(GT, seen, scc, v);
+      int sccd = scc[0];
       for(int u : scc){
-        if(u < sccid){
-          sccid = u;
+        if(u < sccd){
+          sccd = u;
         }
       }
       for(int u : scc){
-         res[u] = sccid;
+        res[u] = sccd;
       }
     }
   }
